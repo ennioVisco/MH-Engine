@@ -12,6 +12,7 @@ Even if the technologies chosen are all cross-platform and open source, ***the o
 
 ## Contributions Guidelines
 To be sure that a minimum quality standard is granted throughout the codebase, some basic rules should be followed for every submission to the project.
+
 1. Public methods must be clearly named and documented.
 2. Proper testing must be done in every situation it should be added (see [Testing & Mocking](#testing)).
 3. Commits must have a proper description of the changes.
