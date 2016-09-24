@@ -1,4 +1,4 @@
-﻿{
+{
   "userSecretsId": "aspnet-MH_Engine-3eedee6a-4a99-40d8-8de8-28716d48f0ea",
 
   "dependencies": {
@@ -40,10 +40,12 @@
       "version": "1.0.0-preview2-final",
       "type": "build"
     },
-    "Microsoft.VisualStudio.Web.CodeGenerators.Mvc":  {
+    "Microsoft.VisualStudio.Web.CodeGenerators.Mvc": {
       "version": "1.0.0-preview2-final",
       "type": "build"
-    }
+    },
+    "Moq": "4.6.25-alpha",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029"
   },
 
   "tools": {
