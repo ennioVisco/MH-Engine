@@ -3,30 +3,63 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using MH_Engine.Models;
+using Microsoft.Extensions.Logging;
+using MH_Engine.Models.ViewModels;
 
 namespace MH_Engine.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ILogger _logger;
+
+        public HomeController(
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            ILoggerFactory loggerFactory)
+        {
+            _userManager = userManager;
+            _signInManager = signInManager;
+            _logger = loggerFactory.CreateLogger<AccountController>();
+        }
+
+        // GET: /Home/Index, /
         public IActionResult Index()
         {
+            if(_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction("ShowChatCategory");
+            }
+
             return View();
         }
 
-        public IActionResult About()
+        // GET: /Home/Credits
+        public IActionResult Credits()
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
+            var model = new PageViewModel("Credits");
+            return View(model);
         }
 
-        public IActionResult Contact()
+        // GET: /Home/Links
+        public IActionResult Links()
         {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
+            var model = new PageViewModel("Links");
+            return View(model);
         }
 
+        // GET: /Home/Manuals
+        public IActionResult Manuals()
+        {
+            var model = new PageViewModel("Manuals");
+            return View(model);
+        }
+
+        // GET: /Home/Error
         public IActionResult Error()
         {
             return View();
