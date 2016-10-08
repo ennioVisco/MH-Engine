@@ -1,20 +1,27 @@
 ﻿using MH_Engine.Controllers;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
+using Moq;
 using Xunit;
 
 namespace MH_Engine.Tests.UnitTests
 {
+
+
+
     public class HomeControllerTests
     {
+
         [Fact]
         public void Index_ReturnsAViewResult()
         {
             // Arrange
             /*var mockRepo = new Mock<IBrainstormSessionRepository>();
-            mockRepo.Setup(repo => repo.ListAsync()).Returns(Task.FromResult(GetTestSessions()));
-            var controller = new HomeController(mockRepo.Object);*/
-            var controller = new HomeController();
+            mockRepo.Setup(repo => repo.ListAsync()).Returns(Task.FromResult(GetTestSessions()));*/
+            //var userStore = new Mock<IUserStore<ApplicationUser>>();
+            //var mockUserManager = new UserManager(userStore.Object);
+            var mockLoggerFactory = new Mock<LoggerFactory>();
+            var controller = new HomeController(mockLoggerFactory.Object);
 
             // Act
             var result = controller.Index();
@@ -24,68 +31,68 @@ namespace MH_Engine.Tests.UnitTests
             var model = Assert.IsAssignableFrom<IEnumerable<StormSessionViewModel>>(
                 viewResult.ViewData.Model);
             Assert.Equal(2, model.Count());*/
-            Assert.IsType<ViewResult>(result);
+            Assert.IsType<RedirectToActionResult>(result);
         }
 
-       /* [Fact]
-        public async Task IndexPost_ReturnsBadRequestResult_WhenModelStateIsInvalid()
-        {
-            // Arrange
-            var mockRepo = new Mock<IBrainstormSessionRepository>();
-            mockRepo.Setup(repo => repo.ListAsync()).Returns(Task.FromResult(GetTestSessions()));
-            var controller = new HomeController(mockRepo.Object);
-            controller.ModelState.AddModelError("SessionName", "Required");
-            var newSession = new HomeController.NewSessionModel();
+        /* [Fact]
+         public async Task IndexPost_ReturnsBadRequestResult_WhenModelStateIsInvalid()
+         {
+             // Arrange
+             var mockRepo = new Mock<IBrainstormSessionRepository>();
+             mockRepo.Setup(repo => repo.ListAsync()).Returns(Task.FromResult(GetTestSessions()));
+             var controller = new HomeController(mockRepo.Object);
+             controller.ModelState.AddModelError("SessionName", "Required");
+             var newSession = new HomeController.NewSessionModel();
 
-            // Act
-            var result = await controller.Index(newSession);
+             // Act
+             var result = await controller.Index(newSession);
 
-            // Assert
-            var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
-            Assert.IsType<SerializableError>(badRequestResult.Value);
-        }
+             // Assert
+             var badRequestResult = Assert.IsType<BadRequestObjectResult>(result);
+             Assert.IsType<SerializableError>(badRequestResult.Value);
+         }
 
-        [Fact]
-        public async Task IndexPost_ReturnsARedirectAndAddsSession_WhenModelStateIsValid()
-        {
-            // Arrange
-            var mockRepo = new Mock<IBrainstormSessionRepository>();
-            mockRepo.Setup(repo => repo.AddAsync(It.IsAny<BrainstormSession>()))
-                .Returns(Task.CompletedTask)
-                .Verifiable();
-            var controller = new HomeController(mockRepo.Object);
-            var newSession = new HomeController.NewSessionModel()
-            {
-                SessionName = "Test Name"
-            };
+         [Fact]
+         public async Task IndexPost_ReturnsARedirectAndAddsSession_WhenModelStateIsValid()
+         {
+             // Arrange
+             var mockRepo = new Mock<IBrainstormSessionRepository>();
+             mockRepo.Setup(repo => repo.AddAsync(It.IsAny<BrainstormSession>()))
+                 .Returns(Task.CompletedTask)
+                 .Verifiable();
+             var controller = new HomeController(mockRepo.Object);
+             var newSession = new HomeController.NewSessionModel()
+             {
+                 SessionName = "Test Name"
+             };
 
-            // Act
-            var result = await controller.Index(newSession);
+             // Act
+             var result = await controller.Index(newSession);
 
-            // Assert
-            var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
-            Assert.Null(redirectToActionResult.ControllerName);
-            Assert.Equal("Index", redirectToActionResult.ActionName);
-            mockRepo.Verify();
-        }
+             // Assert
+             var redirectToActionResult = Assert.IsType<RedirectToActionResult>(result);
+             Assert.Null(redirectToActionResult.ControllerName);
+             Assert.Equal("Index", redirectToActionResult.ActionName);
+             mockRepo.Verify();
+         }
 
-        private List<BrainstormSession> GetTestSessions()
-        {
-            var sessions = new List<BrainstormSession>();
-            sessions.Add(new BrainstormSession()
-            {
-                DateCreated = new DateTime(2016, 7, 2),
-                Id = 1,
-                Name = "Test One"
-            });
-            sessions.Add(new BrainstormSession()
-            {
-                DateCreated = new DateTime(2016, 7, 1),
-                Id = 2,
-                Name = "Test Two"
-            });
-            return sessions;
-        } */
+         private List<BrainstormSession> GetTestSessions()
+         {
+             var sessions = new List<BrainstormSession>();
+             sessions.Add(new BrainstormSession()
+             {
+                 DateCreated = new DateTime(2016, 7, 2),
+                 Id = 1,
+                 Name = "Test One"
+             });
+             sessions.Add(new BrainstormSession()
+             {
+                 DateCreated = new DateTime(2016, 7, 1),
+                 Id = 2,
+                 Name = "Test Two"
+             });
+             return sessions;
+         } */
     }
 
 }

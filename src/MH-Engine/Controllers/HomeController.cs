@@ -13,29 +13,20 @@ namespace MH_Engine.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
+    //    private readonly SignInManager<ApplicationUser> _signInManager;
+    //    private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger _logger;
 
         public HomeController(
-            UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager,
             ILoggerFactory loggerFactory)
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
         // GET: /Home/Index, /
         public IActionResult Index()
         {
-            if(_signInManager.IsSignedIn(User))
-            {
-                return RedirectToAction("ShowChatCategory");
-            }
-
-            return View();
+            return RedirectToAction("Login", "AccountController");
         }
 
         // GET: /Home/Credits

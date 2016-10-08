@@ -43,6 +43,11 @@ namespace MH_Engine.Controllers
         [AllowAnonymous]
         public IActionResult Login(string returnUrl = null)
         {
+            if (_signInManager.IsSignedIn(User))
+            {
+                return RedirectToAction("ShowChatMessages", "ChatController");
+            }
+
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
